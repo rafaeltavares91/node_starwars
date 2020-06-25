@@ -1,11 +1,18 @@
-class UserController {
+const starwarsClient = require('../services/starwarsClient')
 
-    getUsers(req, res) {
-        const user = {
-            name: "Murilo",
-            age: 13
+class UserController {
+    async getUsers(req, res) {
+        const {id} = req.params;
+        const { name } = req.query;
+        console.log(name);
+        console.log(id); 
+        const response  = await starwarsClient.get('/people/1');
+
+        const person = {
+            name: response.data.name,
+            height: response.data.height
         }
-        return res.json(user)
+        return res.json(person);
     }
 
     saveUser(req, res) {
